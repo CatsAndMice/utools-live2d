@@ -16,9 +16,11 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html,
+body {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  -webkit-app-region: drag;
 }
 </style>

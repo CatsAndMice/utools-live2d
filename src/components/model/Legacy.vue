@@ -27,8 +27,8 @@ export default {
             },
             onLoad: () => {
               console.log("Model loaded successfully");
-            }
-          })
+            },
+          });
         }
       }
     );
@@ -54,6 +54,7 @@ export default {
 
 <style scoped>
 .live2d {
+  background: transparent !important;
   /* 如果需要添加样式可以在这里添加 */
 }
 </style>

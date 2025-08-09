@@ -39,7 +39,7 @@ export default {
       timeout: 0,
     });
     const modelPath = shallowRef(
-      "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/22.2017.school/22.2017.valley.model.json"
+      "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/22.2017.school/22.2017.newyear.model.json"
     ); // Replace with your actual model path
     const cavSize = ref(getCavSize());
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
