@@ -5,6 +5,7 @@
     class="h-screen w-screen overflow-hidden"
   >
     <tips-render v-bind="tips" />
+    <tool-bar :on-show-message="onShowMessage" />
     <div class="mt-5">
       <component :is="name" :model-path="modelPath" v-bind="cavSize" />
     </div>
@@ -14,6 +15,7 @@
 import LegacyRender from "./Legacy.vue";
 import CurrentRender from "./Current.vue";
 import TipsRender from "./Tips.vue";
+import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
 import { ref, shallowRef, computed, unref } from "vue";
 
@@ -23,6 +25,7 @@ export default {
     LegacyRender,
     CurrentRender,
     TipsRender,
+    ToolBar,
   },
   setup() {
     const tipJSONs = zhTips;
@@ -36,7 +39,7 @@ export default {
       timeout: 0,
     });
     const modelPath = shallowRef(
-      "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/22.2017.newyear/22.2017.summer.normal.1.model.json"
+      "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/22.2017.school/22.2017.valley.model.json"
     ); // Replace with your actual model path
     const cavSize = ref(getCavSize());
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
@@ -80,7 +83,14 @@ export default {
       }
     };
 
+    const onShowMessage = (tipParams) => {
+      if (tipParams) {
+        tips.value = tipParams;
+      }
+    };
+
     return {
+      onShowMessage,
       name,
       cavSize,
       modelPath,

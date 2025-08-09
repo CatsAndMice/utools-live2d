@@ -27,8 +27,8 @@ export default {
             },
             onLoad: () => {
               console.log("Model loaded successfully");
-            },
-          });
+            }
+          })
         }
       }
     );
