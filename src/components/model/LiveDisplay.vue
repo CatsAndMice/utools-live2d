@@ -46,16 +46,19 @@ export default {
     };
 
     const bindModelEvent = (model) => {
+      let currentMotionIndex = 0;
       model.on("pointerdown", () => {
         try {
           const availableMotions =
             model.internalModel.motionManager.motionGroups;
           const motionNames = Object.keys(availableMotions);
           if (motionNames.length > 0) {
-            const randomMotion =
-              motionNames[Math.floor(Math.random() * motionNames.length)];
+            if (currentMotionIndex > motionNames.length - 1) {
+              currentMotionIndex = 0;
+            }
+            const randomMotion = motionNames[currentMotionIndex];
             model.motion(randomMotion);
-            console.log(randomMotion);
+            currentMotionIndex++;
           } else {
             console.warn("No available motions found");
           }
@@ -88,7 +91,6 @@ export default {
     // 监听尺寸变化
     watch([width, height], () => {
       if (app) {
-
         app.renderer.resize(unref(width), unref(height));
 
         // console.log(app.renderer,unref(width));
