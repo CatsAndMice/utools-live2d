@@ -5,17 +5,24 @@
 import * as PIXI from "pixi.js";
 import { Live2DModel } from "pixi-live2d-display";
 import { toRefs, unref, onMounted, watch } from "vue";
-
+import { to } from "await-to-js";
 window.PIXI = PIXI;
 export default {
   props: {
+    loading: {
+      type: Boolean,
+      default: true,
+    },
     modelPath: String,
     width: Number,
     height: Number,
   },
-  setup(props) {
+  emits: ["update:loading", "fail"],
+  setup(props, { emit }) {
     let app = null,
-      model = null;
+      model = null,
+      maxRetryCount = 3,
+      retryCount = 0;
     const createApp = () => {
       return new Promise((resolve) => {
         app = new PIXI.Application({
@@ -73,12 +80,30 @@ export default {
         model.destroy();
         model = null;
       }
+      emit("update:loading", true);
       // 引入模型
-      model = await Live2DModel.from(unref(modelPath));
+      const [err, beforeModel] = await to(Live2DModel.from(unref(modelPath)));
+
+      // 重试三次
+      if (err) {
+        if (retryCount < maxRetryCount) {
+          retryCount++;
+          await initLive2DModel();
+          return;
+        }
+        emit("update:loading", false);
+        emit("fail");
+        return;
+      }
+      console.log(beforeModel);
+
+      model = beforeModel;
       // 创建模型对象
       app.stage.addChild(model);
       setModelPosition(model);
       bindModelEvent(model);
+      emit("update:loading", false);
+      console.log(unref(props.loading));
     };
 
     // 监听尺寸变化
@@ -92,9 +117,6 @@ export default {
     watch([width, height], () => {
       if (app) {
         app.renderer.resize(unref(width), unref(height));
-
-        // console.log(app.renderer,unref(width));
-
         if (model) {
           setModelPosition(model);
         }

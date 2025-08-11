@@ -12,8 +12,16 @@
       @resize="isResizable = $event"
     />
     <div class="mt-5">
-      <component :is="name" :model-path="modelPath" v-bind="cavSize" />
+      <component
+        :is="name"
+        :model-path="modelPath"
+        v-bind="cavSize"
+        :loading="isLoading"
+        @update:loading="isLoading = $event"
+        @fail="onFail"
+      />
     </div>
+    <nice-loading v-if="isLoading" />
   </div>
 </template>
 <script>
@@ -21,6 +29,7 @@ import LiveDisplay from "./LiveDisplay.vue";
 import TipsRender from "./Tips.vue";
 import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
+import NiceLoading from "../NiceLoading.vue";
 import { ref, computed, unref, shallowRef, onMounted, onUnmounted } from "vue";
 import useModelStore from "../../store/model";
 import { debounce } from "lodash-es";
@@ -30,6 +39,7 @@ export default {
     LiveDisplay,
     TipsRender,
     ToolBar,
+    NiceLoading,
   },
   setup() {
     const tipJSONs = zhTips;
@@ -42,13 +52,12 @@ export default {
       priority: -1,
       timeout: 0,
     });
+    const isLoading = ref(true);
     const isResizable = shallowRef(false);
     const { modelPath } = useModelStore();
     const cavSize = ref(getCavSize());
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
-    const name = computed(
-      () => "LiveDisplay"
-    );
+    const name = computed(() => "LiveDisplay");
 
     const getRandomTip = (tips, event) => {
       if (!tips) return null;
@@ -96,6 +105,10 @@ export default {
       cavSize.value = getCavSize();
     }, 1000);
 
+    const onFail = () => {
+      console.log("失败");
+    };
+
     onMounted(() => {
       window.addEventListener("resize", handleResize);
     });
@@ -105,6 +118,8 @@ export default {
     });
 
     return {
+      onFail,
+      isLoading,
       isResizable,
       onShowMessage,
       name,

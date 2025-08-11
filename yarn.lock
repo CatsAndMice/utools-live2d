@@ -2179,6 +2179,11 @@ autoprefixer@^10.2.4, autoprefixer@^10.4.21:
     picocolors "^1.1.1"
     postcss-value-parser "^4.2.0"
 
+await-to-js@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmmirror.com/await-to-js/-/await-to-js-3.0.0.tgz#70929994185616f4675a91af6167eb61cc92868f"
+  integrity sha512-zJAaP9zxTcvTHRlejau3ZOY4V7SRpiByf3/dxx2uyKxxor19tpmpV2QRsTKikckwhaPmr2dVpxxMr7jOCYVp5g==
+
 babel-loader@^8.2.2:
   version "8.4.1"
   resolved "https://registry.npmmirror.com/babel-loader/-/babel-loader-8.4.1.tgz"

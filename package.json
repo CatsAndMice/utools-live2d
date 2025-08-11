@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "await-to-js": "^3.0.0",
     "core-js": "^3.8.3",
     "font-awesome": "^4.7.0",
     "lodash-es": "^4.17.21",
