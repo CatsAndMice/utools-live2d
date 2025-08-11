@@ -17,11 +17,16 @@
 </template>
 
 <script>
+import { unref } from "vue";
+import useModelStore from "../../store/model";
 export default {
   props: {
     onShowMessage: Function,
+    isResizable: Boolean,
   },
-  setup(props) {
+  emits: ["resize"],
+  setup(props, { emit }) {
+    const { nextModel } = useModelStore();
     // const store = useStore()
 
     // const modelPath = computed(() => store.state.config.modelPath)
@@ -35,19 +40,18 @@ export default {
       fetch("https://v1.hitokoto.cn")
         .then((response) => response.json())
         .then((result) => {
-          const text = `
-            ${result.hitokoto}
-            <p style="text-align: right;">来自 <span>「${result.from}」</span>，是 <span>${result.creator}</span> 在 hitokoto.cn 的投稿。</p>`;
+          const text = `${result.hitokoto}`;
           showMessage(text, 6000, 10);
         });
     };
 
     const loadOtherModel = () => {
-      // store.dispatch('config/nextModel')
+      nextModel();
     };
 
     const setResizable = () => {
-      // store.dispatch('win/setResizable', !resizable.value)
+      const isResizable = unref(props.isResizable);
+      emit("resize", !isResizable);
     };
 
     const showInfo = () => {
@@ -55,8 +59,6 @@ export default {
     };
 
     return {
-      // modelPath,
-      // resizable,
       toolList: [
         { name: "comment", icon: "comment", call: showHitokoto },
         { name: "user", icon: "user-circle", call: loadOtherModel },

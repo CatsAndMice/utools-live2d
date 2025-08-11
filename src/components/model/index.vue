@@ -1,29 +1,33 @@
 <template>
   <div
+    :class="{ 'border-2 border-dashed border-black': isResizable }"
     @mouseover="handleMouseOver"
     @click="handleClick"
     class="h-screen w-screen overflow-hidden"
   >
     <tips-render v-bind="tips" />
-    <tool-bar :on-show-message="onShowMessage" />
+    <tool-bar
+      :on-show-message="onShowMessage"
+      :is-resizable="isResizable"
+      @resize="isResizable = $event"
+    />
     <div class="mt-5">
       <component :is="name" :model-path="modelPath" v-bind="cavSize" />
     </div>
   </div>
 </template>
 <script>
-import LegacyRender from "./Legacy.vue";
-import CurrentRender from "./Current.vue";
+import LiveDisplay from "./LiveDisplay.vue";
 import TipsRender from "./Tips.vue";
 import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
-import { ref, shallowRef, computed, unref } from "vue";
-
+import { ref, computed, unref, shallowRef, onMounted, onUnmounted } from "vue";
+import useModelStore from "../../store/model";
+import { debounce } from "lodash-es";
 export default {
   name: "ModelRender",
   components: {
-    LegacyRender,
-    CurrentRender,
+    LiveDisplay,
     TipsRender,
     ToolBar,
   },
@@ -38,13 +42,12 @@ export default {
       priority: -1,
       timeout: 0,
     });
-    const modelPath = shallowRef(
-      "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/22.2017.school/22.2017.newyear.model.json"
-    ); // Replace with your actual model path
+    const isResizable = shallowRef(false);
+    const { modelPath } = useModelStore();
     const cavSize = ref(getCavSize());
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
-    const name = computed(() =>
-      isMoc3.value ? "CurrentRender" : "LegacyRender"
+    const name = computed(
+      () => "LiveDisplay"
     );
 
     const getRandomTip = (tips, event) => {
@@ -89,7 +92,20 @@ export default {
       }
     };
 
+    const handleResize = debounce(() => {
+      cavSize.value = getCavSize();
+    }, 1000);
+
+    onMounted(() => {
+      window.addEventListener("resize", handleResize);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener("resize", handleResize);
+    });
+
     return {
+      isResizable,
       onShowMessage,
       name,
       cavSize,

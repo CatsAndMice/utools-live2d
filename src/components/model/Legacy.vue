@@ -3,8 +3,12 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from "vue";
+import { onMounted, watch } from "vue";
 
+// 覆盖 hitTestSimpleCustom 方法
+window.Live2D.hitTestSimpleCustom = function () {
+  return { hit: false }; // 返回一个默认值，避免访问未定义的数组项
+};
 export default {
   name: "LegacyRender",
 
@@ -15,37 +19,28 @@ export default {
   },
 
   setup(props) {
-    const isMountRef = ref(false);
-    // 监听 modelPath 变化
-    watch(
-      () => props.modelPath,
-      (newPath) => {
-        if (newPath) {
-          window.loadlive2d("live2d", newPath, {
-            onError: (error) => {
-              console.error("Live2D load error:", error);
-            },
-            onLoad: () => {
-              console.log("Model loaded successfully");
-            },
-          });
-        }
-      }
-    );
-
-    // 监听尺寸变化
-    watch([() => props.height, () => props.width], () => {
-      if (isMountRef.value) {
-        window.location.reload();
-      } else {
-        isMountRef.value = true;
-      }
-    });
+    const loadModel = (path) => {
+      if (!path) return;
+      window.loadlive2d("live2d", path, {
+        autoMotion: true,
+        motionInterval: 1000,
+        x: "center", // 水平居中
+        y: "center", // 垂直居中
+        onError: console.error,
+        onLoad: () => console.log("Model loaded successfully"),
+      });
+    };
 
     // 初始加载
-    onMounted(() => {
-      window.loadlive2d("live2d", props.modelPath);
-    });
+    onMounted(() => loadModel(props.modelPath));
+
+    // 监听路径变化
+    watch(() => props.modelPath, loadModel);
+
+    // 监听尺寸变化
+    watch([() => props.height, () => props.width], () =>
+      loadModel(props.modelPath)
+    );
 
     return {};
   },

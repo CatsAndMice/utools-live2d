@@ -10,11 +10,17 @@ window.exports = {
                     "alwaysOnTop": true,
                     "transparent": true,
                     "frame": false,
-                    "resizable": false,
+                    "resizable": true,
                     "backgroundColor": "#00000000",
                     movable: true,
-                    hasShadow: false
+                    hasShadow: false,
+                    webPreferences: {
+                        nodeIntegration: true,
+                        contextIsolation: false,
+                        // devTools: true
+                    }
                 })
+                // win.webContents.openDevTools()
                 utools.outPlugin();
             },
         },
