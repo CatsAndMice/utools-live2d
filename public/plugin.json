@@ -4,10 +4,10 @@
   "preload": "preload.js",
   "features": [
     {
-      "code": "markdown",
-      "explain": "微信markdown编辑器",
+      "code": "live2d",
+      "explain": "👻在你的桌面放一个萌妹子，多一点乐趣😏~",
       "cmds": [
-        "markdown"
+        "live2d"
       ]
     }
   ]
