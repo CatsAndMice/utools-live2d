@@ -13,11 +13,15 @@ export default {
       type: Boolean,
       default: true,
     },
+    fail: {
+      type: Boolean,
+      default: false,
+    },
     modelPath: String,
     width: Number,
     height: Number,
   },
-  emits: ["update:loading", "fail"],
+  emits: ["update:loading", "update:fail"],
   setup(props, { emit }) {
     let app = null,
       model = null,
@@ -80,6 +84,7 @@ export default {
         model.destroy();
         model = null;
       }
+      emit("update:fail", false);
       emit("update:loading", true);
       // 引入模型
       const [err, beforeModel] = await to(Live2DModel.from(unref(modelPath)));
@@ -92,11 +97,9 @@ export default {
           return;
         }
         emit("update:loading", false);
-        emit("fail");
+        emit("update:fail", true);
         return;
       }
-      console.log(beforeModel);
-
       model = beforeModel;
       // 创建模型对象
       app.stage.addChild(model);

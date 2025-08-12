@@ -18,10 +18,12 @@
         v-bind="cavSize"
         :loading="isLoading"
         @update:loading="isLoading = $event"
-        @fail="onFail"
+        :fail="isFail"
+        @update:fail="isFail = $event"
       />
     </div>
     <nice-loading v-if="isLoading" />
+    <nice-fail v-if="isFail" />
   </div>
 </template>
 <script>
@@ -30,6 +32,7 @@ import TipsRender from "./Tips.vue";
 import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
 import NiceLoading from "../NiceLoading.vue";
+import NiceFail from "../NiceFail.vue";
 import { ref, computed, unref, shallowRef, onMounted, onUnmounted } from "vue";
 import useModelStore from "../../store/model";
 import { debounce } from "lodash-es";
@@ -40,6 +43,7 @@ export default {
     TipsRender,
     ToolBar,
     NiceLoading,
+    NiceFail,
   },
   setup() {
     const tipJSONs = zhTips;
@@ -53,6 +57,7 @@ export default {
       timeout: 0,
     });
     const isLoading = ref(true);
+    const isFail = ref(false);
     const isResizable = shallowRef(false);
     const { modelPath } = useModelStore();
     const cavSize = ref(getCavSize());
@@ -105,10 +110,6 @@ export default {
       cavSize.value = getCavSize();
     }, 1000);
 
-    const onFail = () => {
-      console.log("失败");
-    };
-
     onMounted(() => {
       window.addEventListener("resize", handleResize);
     });
@@ -118,7 +119,7 @@ export default {
     });
 
     return {
-      onFail,
+      isFail,
       isLoading,
       isResizable,
       onShowMessage,
