@@ -6,6 +6,9 @@ import * as PIXI from "pixi.js";
 import { Live2DModel } from "pixi-live2d-display";
 import { toRefs, unref, onMounted, watch } from "vue";
 import { to } from "await-to-js";
+import { eq } from "lodash-es"
+import { setStorageItem, getStorageItem } from "../../utils/dbStorage";
+
 window.PIXI = PIXI;
 export default {
   props: {
@@ -86,6 +89,11 @@ export default {
       }
       emit("update:fail", false);
       emit("update:loading", true);
+      if (!eq(unref(modelPath), getStorageItem('modelPath'))) {
+        setStorageItem('modelPath', unref(modelPath));
+      }
+
+
       // 引入模型
       const [err, beforeModel] = await to(Live2DModel.from(unref(modelPath)));
 

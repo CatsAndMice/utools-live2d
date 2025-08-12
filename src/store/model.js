@@ -1,11 +1,12 @@
-import { shallowRef } from "vue"
-import oldModels from "../model/models.json"
+import { shallowRef } from "vue";
+import {  getStorageItem } from "../utils/dbStorage";
+import oldModels from "../model/models.json";
 // github 代理   https://ghproxy.link/
 const models = oldModels.map((item = '') => {
     return `https://ghfast.top/${item}`
 })
 const counts = models.length
-const modelPath = shallowRef(models[Math.floor(Math.random() * counts)])
+const modelPath = shallowRef(getStorageItem('modelPath') || models[Math.floor(Math.random() * counts)])
 export default () => {
     const nextModel = () => {
         const index = models.findIndex((item) => item === modelPath.value)
