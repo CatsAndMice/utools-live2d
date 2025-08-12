@@ -1,5 +1,4 @@
 <template>
-  <!-- From Uiverse.io by vinodjangid07 -->
   <div class="loader">
     <div class="truckWrapper">
       <div class="truckBody">
@@ -131,7 +130,6 @@ h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"
   </div>
 </template>
 <style scoped>
-/* From Uiverse.io by vinodjangid07 */
 .loader {
   width: fit-content;
   height: fit-content;
