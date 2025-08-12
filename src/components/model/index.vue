@@ -1,7 +1,8 @@
 <template>
+   <!-- @mouseover="handleMouseOver" -->
   <div
     :class="{ 'border-2 border-dashed border-black': isResizable }"
-    @mouseover="handleMouseOver"
+ 
     @click="handleClick"
     class="h-screen w-screen overflow-hidden"
   >

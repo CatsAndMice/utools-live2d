@@ -27,15 +27,9 @@ export default {
   emits: ["resize"],
   setup(props, { emit }) {
     const { nextModel } = useModelStore();
-    // const store = useStore()
-
-    // const modelPath = computed(() => store.state.config.modelPath)
-    // const resizable = computed(() => store.state.win.resizable)
-
     const showMessage = (text, timeout, priority) => {
       props.onShowMessage({ text, priority, timeout });
     };
-
     const showHitokoto = () => {
       fetch("https://v1.hitokoto.cn")
         .then((response) => response.json())
@@ -54,22 +48,26 @@ export default {
       emit("resize", !isResizable);
     };
 
-    const showInfo = () => {
-      showMessage("", 8000, 11);
-    };
+    // const showInfo = () => {
+    //   showMessage(
+    //     "Github地址：<span style='color: #87CEFA;cursor: pointer;'>https://github.com/CatsAndMice/utools-live2d</span>",
+    //     6000,
+    //     11
+    //   );
+    // };
 
     return {
       toolList: [
         { name: "comment", icon: "comment", call: showHitokoto },
         { name: "user", icon: "user-circle", call: loadOtherModel },
         { name: "square", icon: "square-o", call: setResizable },
-        { name: "info", icon: "info-circle", call: showInfo },
+        // { name: "info", icon: "info-circle", call: showInfo },
       ],
       showMessage,
       showHitokoto,
       loadOtherModel,
       setResizable,
-      showInfo,
+      // showInfo,
     };
   },
 };

@@ -21,8 +21,6 @@ export default {
     watch(
       () => props.text,
       () => {
-        console.log(props.text);
-
         if (
           props.text &&
           (!currentTips.value || props.priority >= currentTips.value.priority)
