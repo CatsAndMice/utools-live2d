@@ -1,7 +1,7 @@
 ## 项目介绍
 utools-live2d 是一个基于 utools 插件的 live2d 模型插件，支持在 utools 中使用 live2d 模型并常驻电脑桌面。
+![11](https://github.com/user-attachments/assets/dbb01d92-4ed7-4473-b087-f6fda4b77e9a)
 
-[](./src/assets/home.png)
 
 ## 功能
 - 支持在 utools 中使用 live2d 模型
