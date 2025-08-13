@@ -1,5 +1,5 @@
 import { shallowRef } from "vue";
-import {  getStorageItem } from "../utils/dbStorage";
+import { getStorageItem } from "../utils/dbStorage";
 import oldModels from "../model/models.json";
 // github 代理   https://ghproxy.link/
 const models = oldModels.map((item = '') => {
@@ -16,8 +16,17 @@ export default () => {
             modelPath.value = models[index + 1]
         }
     }
+    const prevModel = () => {
+        const index = models.findIndex((item) => item === modelPath.value)
+        if (index === 0) {
+            modelPath.value = models[models.length - 1].path
+        } else {
+            modelPath.value = models[index - 1]
+        }
+    }
     return {
         modelPath,
-        nextModel
+        nextModel,
+        prevModel
     }
 }

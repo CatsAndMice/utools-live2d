@@ -48,26 +48,17 @@ export default {
       emit("resize", !isResizable);
     };
 
-    // const showInfo = () => {
-    //   showMessage(
-    //     "Github地址：<span style='color: #87CEFA;cursor: pointer;'>https://github.com/CatsAndMice/utools-live2d</span>",
-    //     6000,
-    //     11
-    //   );
-    // };
 
     return {
       toolList: [
         { name: "comment", icon: "comment", call: showHitokoto },
         { name: "user", icon: "user-circle", call: loadOtherModel },
-        { name: "square", icon: "square-o", call: setResizable },
-        // { name: "info", icon: "info-circle", call: showInfo },
+        { name: "square", icon: "square-o", call: setResizable }
       ],
       showMessage,
       showHitokoto,
       loadOtherModel,
       setResizable,
-      // showInfo,
     };
   },
 };

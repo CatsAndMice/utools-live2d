@@ -33,9 +33,8 @@ import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
 import NiceLoading from "../NiceLoading.vue";
 import NiceFail from "../NiceFail.vue";
-import { ref, computed, unref, shallowRef, onMounted, onUnmounted } from "vue";
+import { ref, computed, unref, shallowRef, inject } from "vue";
 import useModelStore from "../../store/model";
-import { debounce } from "lodash-es";
 export default {
   name: "model-render",
   install(Vue) {
@@ -50,10 +49,6 @@ export default {
   },
   setup() {
     const tipJSONs = zhTips;
-    const getCavSize = () => ({
-      width: window.innerWidth,
-      height: window.innerHeight - 20,
-    });
     const tips = ref({
       text: "0",
       priority: -1,
@@ -63,7 +58,7 @@ export default {
     const isFail = ref(false);
     const isResizable = shallowRef(false);
     const { modelPath } = useModelStore();
-    const cavSize = ref(getCavSize());
+    const cavSize = inject("cavSize");
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
     const name = computed(() => "LiveDisplay");
 
@@ -108,18 +103,6 @@ export default {
         tips.value = tipParams;
       }
     };
-
-    const handleResize = debounce(() => {
-      cavSize.value = getCavSize();
-    }, 1000);
-
-    onMounted(() => {
-      window.addEventListener("resize", handleResize);
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener("resize", handleResize);
-    });
 
     return {
       isFail,
