@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden h-full w-4/6" ref="dom">
+  <div class="overflow-hidden h-full w-full" ref="dom">
     <component
       :is="name"
       :model-path="modelPath"
