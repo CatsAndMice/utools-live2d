@@ -1,5 +1,5 @@
 window.exports = {
-    markdown: {
+    live2d: {
         mode: "none",
         args: {
             // 插件执行入口

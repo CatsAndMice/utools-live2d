@@ -9,7 +9,7 @@
     <template #content>
       <div
         @click="visible = false"
-        class="bg-white cursor-pointer shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+        class="bg-white cursor-pointer shadow-[0_0_5px_rgba(0,0,0,0.1)] rounded"
       >
         <tool-bar />
       </div>

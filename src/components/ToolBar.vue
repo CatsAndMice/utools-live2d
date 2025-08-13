@@ -1,5 +1,5 @@
 <template>
-  <a-list :max-height="cavSize.height" :bordered="false" hoverable>
+  <a-list size="small" :max-height="cavSize.height" :bordered="false" hoverable>
     <a-list-item @click="showHitokoto"> 每日一言 </a-list-item>
     <a-list-item @click="prevModel"> 上一个模型 </a-list-item>
     <a-list-item @click="nextModel"> 下一个模型 </a-list-item>
