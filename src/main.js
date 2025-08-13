@@ -1,6 +1,5 @@
-import { createApp } from 'vue'
+import createApp from '@utils/createApp'
 import App from './App.vue'
-import './main.css' 
 import 'font-awesome/css/font-awesome.css'
-// Ensure Tailwind CSS is imported
-createApp(App).mount('#app')
+createApp(App)
+

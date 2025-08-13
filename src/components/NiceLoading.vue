@@ -1,5 +1,5 @@
 <template>
-  <div class="loader">
+  <div class="loader" :style="customStyle">
     <div class="truckWrapper">
       <div class="truckBody">
         <svg
@@ -129,6 +129,16 @@ h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    customStyle: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+};
+</script>
 <style scoped>
 .loader {
   width: fit-content;

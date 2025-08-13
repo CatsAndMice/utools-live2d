@@ -342,9 +342,19 @@
   </div>
 </template>
 <script>
+import { toRefs, unref } from "vue";
 export default {
-  setup() {
+  props: {
+    fail: Function,
+  },
+  setup(props) {
+    const { fail } = toRefs(props);
     const onReload = () => {
+      const unrefFail = unref(fail);
+      if (unref(fail)) {
+        unrefFail();
+        return;
+      }
       window.location.reload();
     };
     return {

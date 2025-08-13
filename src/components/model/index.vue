@@ -1,8 +1,7 @@
 <template>
-   <!-- @mouseover="handleMouseOver" -->
+  <!-- @mouseover="handleMouseOver" -->
   <div
     :class="{ 'border-2 border-dashed border-black': isResizable }"
- 
     @click="handleClick"
     class="h-screen w-screen overflow-hidden"
   >
@@ -38,7 +37,10 @@ import { ref, computed, unref, shallowRef, onMounted, onUnmounted } from "vue";
 import useModelStore from "../../store/model";
 import { debounce } from "lodash-es";
 export default {
-  name: "ModelRender",
+  name: "model-render",
+  install(Vue) {
+    Vue.component(this.name, this);
+  },
   components: {
     LiveDisplay,
     TipsRender,

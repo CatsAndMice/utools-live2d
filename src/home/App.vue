@@ -1,4 +1,9 @@
-<template>111</template>
+<template>
+  <div class="h-screen w-screen overflow-hidden flex">
+    <simple-model-render />
+    <div class="h-full grow border-l border-solid"></div>
+  </div>
+</template>
 
 <script>
 export default {
