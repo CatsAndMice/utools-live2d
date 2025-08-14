@@ -86,11 +86,10 @@ export default {
         model.destroy();
         model = null;
       }
+      const startTime = Date.now();
+
       emit("update:fail", false);
       emit("update:loading", true);
-      // if (!eq(unref(modelPath), getStorageItem("modelPath"))) {
-      //   setStorageItem("modelPath", unref(modelPath));
-      // }
 
       // 引入模型
       const [err, beforeModel] = await to(Live2DModel.from(unref(modelPath)));
@@ -111,8 +110,17 @@ export default {
       app.stage.addChild(model);
       setModelPosition(model);
       bindModelEvent(model);
+      const endTime = Date.now();
+      if (endTime - startTime < 200) {
+        console.log(1212);
+        console.log(endTime - startTime);
+
+        setTimeout(() => {
+          emit("update:loading", false);
+        }, 2000);
+        return;
+      }
       emit("update:loading", false);
-      console.log(unref(props.loading));
     };
 
     // 监听尺寸变化
@@ -133,6 +141,7 @@ export default {
     });
 
     onMounted(() => {
+      emit("update:loading", true);
       createApp().then(initLive2DModel);
     });
   },

@@ -1,6 +1,6 @@
 <template>
   <a-dropdown @select="handleSelect" position="br">
-    <a-tooltip content="预览 Live2D 模型" position="left">
+    <a-tooltip content="选择预览 Live2D 模型" position="left">
       <a-button shape="circle" style="--color-secondary: #fff">
         <icon-common class="!w-5 !h-5" />
       </a-button>

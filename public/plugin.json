@@ -1,7 +1,9 @@
-
 {
   "logo": "logo.png",
-  "preload": "preload.js",
+  "main": "home.html",
+  "development": {
+    "main": "http://localhost:8080/home.html"
+  },
   "features": [
     {
       "code": "live2d",
