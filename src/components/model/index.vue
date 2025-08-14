@@ -3,14 +3,9 @@
   <div
     :class="{ 'border-2 border-dashed border-black': isResizable }"
     @click="handleClick"
-    class="h-screen w-screen overflow-hidden"
+    class="h-screen w-screen overflow-hidden cursor-pointer"
   >
     <tips-render v-bind="tips" />
-    <tool-bar
-      :on-show-message="onShowMessage"
-      :is-resizable="isResizable"
-      @resize="isResizable = $event"
-    />
     <div class="mt-5">
       <component
         :is="name"
@@ -33,7 +28,14 @@ import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
 import NiceLoading from "../NiceLoading.vue";
 import NiceFail from "../NiceFail.vue";
-import { ref, computed, unref, shallowRef, inject } from "vue";
+import {
+  ref,
+  computed,
+  unref,
+  inject,
+  getCurrentInstance,
+  onBeforeMount,
+} from "vue";
 import useModelStore from "../../store/model";
 export default {
   name: "model-render",
@@ -54,11 +56,13 @@ export default {
       priority: -1,
       timeout: 0,
     });
+    const { proxy } = getCurrentInstance();
+    const emitter = proxy.$emitter;
     const isLoading = ref(true);
     const isFail = ref(false);
-    const isResizable = shallowRef(false);
     const { modelPath } = useModelStore();
     const cavSize = inject("cavSize");
+    const isResizable = inject("isResizable");
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
     const name = computed(() => "LiveDisplay");
 
@@ -103,6 +107,11 @@ export default {
         tips.value = tipParams;
       }
     };
+
+    onBeforeMount(() => {
+      emitter.off("showMessage");
+      emitter.on("showMessage", onShowMessage);
+    });
 
     return {
       isFail,

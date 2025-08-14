@@ -11,7 +11,7 @@
         @click="visible = false"
         class="bg-white cursor-pointer shadow-[0_0_5px_rgba(0,0,0,0.1)] rounded"
       >
-        <tool-bar />
+        <tool-bar @resize="isResizable = $event" />
       </div>
     </template>
   </a-trigger>
@@ -28,7 +28,9 @@ export default {
     });
     const visible = ref(false);
     const cavSize = ref(getCavSize());
+    const isResizable = ref(false);
     provide("cavSize", cavSize);
+    provide("isResizable", isResizable);
     const handleResize = debounce(() => {
       cavSize.value = getCavSize();
     }, 1000);
@@ -46,6 +48,7 @@ export default {
     });
     return {
       visible,
+      isResizable,
       handleVisibleChange,
     };
   },
