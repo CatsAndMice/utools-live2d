@@ -5,6 +5,7 @@ import oldModels from "../model/models.json";
 const models = oldModels.map((item = '') => {
     return `https://ghfast.top/${item}`
 })
+
 const counts = models.length
 const modelPath = shallowRef(getStorageItem('modelPath') || models[Math.floor(Math.random() * counts)])
 export default () => {
@@ -26,6 +27,7 @@ export default () => {
     }
     return {
         modelPath,
+        models,
         nextModel,
         prevModel
     }
