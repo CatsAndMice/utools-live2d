@@ -1,6 +1,7 @@
 {
   "logo": "logo.png",
   "main": "home.html",
+  "preload": "homePreload.js",
   "development": {
     "main": "http://localhost:8080/home.html"
   },

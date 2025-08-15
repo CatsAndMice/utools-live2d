@@ -9,7 +9,11 @@
         >
           <a-space>
             <a-tooltip content="常驻桌面">
-              <a-button shape="circle" style="--color-secondary: #fff">
+              <a-button
+                shape="circle"
+                style="--color-secondary: #fff"
+                @click="onCreatePushpinBrowserWindow"
+              >
                 <icon-pushpin class="!w-5 !h-5" />
               </a-button>
             </a-tooltip>
@@ -24,12 +28,27 @@
 <script>
 import SelectModel from "@components/select-model";
 import { IconPushpin } from "@arco-design/web-vue/es/icon";
+import { setStorageItem } from "@utils/dbStorage";
+import useModelStore from "@store/model";
+import { unref } from "vue";
 export default {
   components: {
     SelectModel,
     IconPushpin,
   },
-  setup() {},
+  setup() {
+    const { modelPath } = useModelStore();
+    const onCreatePushpinBrowserWindow = () => {
+      setStorageItem("modelPath", unref(modelPath));
+      console.log(window.service);
+      
+      window.service.createPushpinBrowserWindow();
+    };
+
+    return {
+      onCreatePushpinBrowserWindow,
+    };
+  },
 };
 </script>
 <style>
