@@ -6,7 +6,9 @@ ipcRenderer.on("ping", (event, data) => {
 });
 
 
-// 监听页面关闭事件，关闭后清理子窗口实例对象
-window.addEventListener('beforeunload', () => {
-   window.pushpinWindow = null
-});
+
+window.service = {
+    onClose() {
+        utools.sendToParent("ping", "close"); // 版本：>= 6.1.0
+    }
+}

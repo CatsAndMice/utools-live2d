@@ -1,3 +1,17 @@
+const { ipcRenderer } = require("electron");
+ipcRenderer.on("ping", (event, data) => {
+    if (data == 'close') {
+        if (window.pushpinWindow) {
+            try {
+                window.pushpinWindow.destroy();
+            } catch (err) {
+                console.warn('关闭窗口失败', err);
+            }
+            window.pushpinWindow = null;
+        }
+
+    }
+});
 
 const createPushpinBrowserWindow = () => {
     if (window.pushpinWindow) {
@@ -23,6 +37,7 @@ const createPushpinBrowserWindow = () => {
             preload: "./preload.js",
             nodeIntegration: true,
             contextIsolation: false,
+            openDevTools: true
         }
     })
     window.pushpinWindow = pushpinWindow

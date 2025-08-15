@@ -39,9 +39,8 @@ export default {
   setup() {
     const { modelPath } = useModelStore();
     const onCreatePushpinBrowserWindow = () => {
+      window.utools.hideMainWindow();
       setStorageItem("modelPath", unref(modelPath));
-      console.log(window.service);
-      
       window.service.createPushpinBrowserWindow();
     };
 

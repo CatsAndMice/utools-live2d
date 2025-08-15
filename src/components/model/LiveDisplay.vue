@@ -6,7 +6,7 @@ import * as PIXI from "pixi.js";
 import { Live2DModel } from "pixi-live2d-display";
 import { toRefs, unref, onMounted, watch } from "vue";
 import { to } from "await-to-js";
-import { eq } from "lodash-es"
+import { eq } from "lodash-es";
 import { setStorageItem, getStorageItem } from "../../utils/dbStorage";
 
 window.PIXI = PIXI;
@@ -87,12 +87,12 @@ export default {
         model.destroy();
         model = null;
       }
+      const startTime = Date.now();
       emit("update:fail", false);
       emit("update:loading", true);
-      if (!eq(unref(modelPath), getStorageItem('modelPath'))) {
-        setStorageItem('modelPath', unref(modelPath));
+      if (!eq(unref(modelPath), getStorageItem("modelPath"))) {
+        setStorageItem("modelPath", unref(modelPath));
       }
-
 
       // 引入模型
       const [err, beforeModel] = await to(Live2DModel.from(unref(modelPath)));
@@ -113,8 +113,14 @@ export default {
       app.stage.addChild(model);
       setModelPosition(model);
       bindModelEvent(model);
+      const endTime = Date.now();
+      if (endTime - startTime < 300) {
+        setTimeout(() => {
+          emit("update:loading", false);
+        }, 1500);
+        return;
+      }
       emit("update:loading", false);
-      console.log(unref(props.loading));
     };
 
     // 监听尺寸变化

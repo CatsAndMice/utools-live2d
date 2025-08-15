@@ -29,13 +29,24 @@
         >{{ isResizable ? "取消设置窗口宽高" : "设置窗口宽高" }}
       </div>
     </a-list-item>
+
+    <a-list-item class="!px-3 !py-2" @click="onClose">
+      <div class="flex items-center">
+        <icon-close-circle size="16" class="mr-2" />关闭
+      </div>
+    </a-list-item>
   </a-list>
 </template>
 
 <script>
 import { unref, inject, getCurrentInstance } from "vue";
 import useModelStore from "@store/model";
-import { IconDown, IconUp, IconMessage } from "@arco-design/web-vue/es/icon";
+import {
+  IconDown,
+  IconUp,
+  IconMessage,
+  IconCloseCircle,
+} from "@arco-design/web-vue/es/icon";
 export default {
   name: "tool-bar",
   install(Vue) {
@@ -45,6 +56,7 @@ export default {
     IconDown,
     IconUp,
     IconMessage,
+    IconCloseCircle,
   },
   emits: ["resize"],
   setup(props, { emit }) {
@@ -69,7 +81,12 @@ export default {
       emit("resize", !unref(isResizable));
     };
 
+    const onClose = () => {
+      window.service.onClose();
+    };
+
     return {
+      onClose,
       isResizable,
       showMessage,
       showHitokoto,
