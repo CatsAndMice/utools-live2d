@@ -6,14 +6,9 @@
         每日一言
       </div>
     </a-list-item>
-    <a-list-item @click="prevModel" class="!px-3 !py-2">
-      <div class="flex items-center">
-        <icon-up size="16" class="mr-2" /> 上一个模型
-      </div>
-    </a-list-item>
     <a-list-item @click="nextModel" class="!px-3 !py-2">
       <div class="flex items-center">
-        <icon-down size="16" class="mr-2" />下一个模型
+        <icon-common size="16" class="mr-2" />更改模型
       </div>
     </a-list-item>
     <a-list-item class="!px-3 !py-2" @click="setResizable">
@@ -42,10 +37,9 @@
 import { unref, inject, getCurrentInstance } from "vue";
 import useModelStore from "@store/model";
 import {
-  IconDown,
-  IconUp,
   IconMessage,
   IconCloseCircle,
+  IconCommon,
 } from "@arco-design/web-vue/es/icon";
 export default {
   name: "tool-bar",
@@ -53,8 +47,7 @@ export default {
     Vue.component(this.name, this);
   },
   components: {
-    IconDown,
-    IconUp,
+    IconCommon,
     IconMessage,
     IconCloseCircle,
   },
