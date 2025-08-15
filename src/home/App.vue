@@ -56,7 +56,7 @@ body {
   background: transparent;
   margin: 0;
   padding: 0;
-  -webkit-app-region: drag;
+  /* -webkit-app-region: drag; */
 }
 
 .me-drawer .arco-drawer-body {
