@@ -40,6 +40,7 @@ const createPushpinBrowserWindow = () => {
             openDevTools: true
         }
     })
+    pushpinWindow.webContents.openDevTools()
     window.pushpinWindow = pushpinWindow
 }
 

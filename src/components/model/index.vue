@@ -1,21 +1,12 @@
 <template>
   <!-- @mouseover="handleMouseOver" -->
-  <div
-    :class="{ 'border-2 border-dashed border-black': isResizable }"
-    @click="handleClick"
-    class="h-screen w-screen overflow-hidden cursor-pointer"
-  >
-    <tips-render v-bind="tips" />
+  <div :class="{ 'border-2 border-dashed border-black': isResizable }" @click="handleClick"
+    class="h-screen w-screen overflow-hidden cursor-pointer">
+    <tips-render v-bind="tips" v-model="isShopTip" />
+    <countdown-tip :is-loading="isLoading || isShopTip" />
     <div class="mt-5">
-      <component
-        :is="name"
-        :model-path="modelPath"
-        v-bind="cavSize"
-        :loading="isLoading"
-        @update:loading="isLoading = $event"
-        :fail="isFail"
-        @update:fail="isFail = $event"
-      />
+      <component :is="name" :model-path="modelPath" v-bind="cavSize" :loading="isLoading"
+        @update:loading="isLoading = $event" :fail="isFail" @update:fail="isFail = $event" />
     </div>
     <nice-loading v-if="isLoading" />
     <nice-fail v-if="isFail" />
@@ -28,15 +19,16 @@ import ToolBar from "./ToolBar.vue";
 import zhTips from "./tips/zh.json";
 import NiceLoading from "../NiceLoading.vue";
 import NiceFail from "../NiceFail.vue";
+import CountdownTip from "../CountdownTip.vue";
 import {
   ref,
   computed,
   unref,
   inject,
   getCurrentInstance,
-  onBeforeMount,
+  onBeforeMount
 } from "vue";
-import useModelStore from "../../store/model";
+import useModelStore from "@store/model";
 export default {
   name: "model-render",
   install(Vue) {
@@ -48,14 +40,17 @@ export default {
     ToolBar,
     NiceLoading,
     NiceFail,
+    CountdownTip
   },
   setup() {
     const tipJSONs = zhTips;
+
     const tips = ref({
       text: "0",
       priority: -1,
       timeout: 0,
     });
+    const isShopTip = ref(false);
     const { proxy } = getCurrentInstance();
     const emitter = proxy.$emitter;
     const isLoading = ref(true);
@@ -65,7 +60,6 @@ export default {
     const isResizable = inject("isResizable");
     const isMoc3 = computed(() => unref(modelPath).endsWith(".model3.json"));
     const name = computed(() => "LiveDisplay");
-
     const getRandomTip = (tips, event) => {
       if (!tips) return null;
 
@@ -114,6 +108,7 @@ export default {
     });
 
     return {
+      isShopTip,
       isFail,
       isLoading,
       isResizable,

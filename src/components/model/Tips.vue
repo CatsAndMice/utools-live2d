@@ -3,7 +3,13 @@
 </template>
 
 <script>
-import { ref, watch, onBeforeUnmount } from "vue";
+import {
+  ref,
+  watch,
+  onBeforeUnmount,
+  getCurrentInstance,
+  onMounted,
+} from "vue";
 
 export default {
   name: "TipsRender",
@@ -12,9 +18,15 @@ export default {
     text: String,
     timeout: Number,
     priority: Number,
+    modelValue: {
+      type: Boolean,
+      default: false,
+    }
   },
-
-  setup(props) {
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const { proxy } = getCurrentInstance();
+    const emitter = proxy.$emitter;
     const currentTips = ref(null);
     let timerRef = null;
 
@@ -26,14 +38,27 @@ export default {
           (!currentTips.value || props.priority >= currentTips.value.priority)
         ) {
           window.clearTimeout(timerRef);
+          emit('update:modelValue', true);
           currentTips.value = props;
-
           timerRef = window.setTimeout(() => {
             currentTips.value = null;
+            emit('update:modelValue', false);
           }, props.timeout);
         }
       }
     );
+
+    onMounted(() => {
+      emitter.on("tip", (tip) => {
+        window.clearTimeout(timerRef);
+        emit('update:modelValue', true);
+        currentTips.value = tip;
+        timerRef = setTimeout(() => {
+          currentTips.value = null;
+          emit('update:modelValue', false);
+        }, tip.timeout);
+      });
+    });
 
     onBeforeUnmount(() => {
       if (timerRef) {

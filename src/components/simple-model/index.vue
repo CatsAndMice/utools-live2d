@@ -1,21 +1,12 @@
 <template>
   <div class="overflow-hidden h-full w-full">
-    <component
-      :is="name"
-      :model-path="modelPath"
-      v-bind="cavSize"
-      :loading="isLoading"
-      @update:loading="isLoading = $event"
-      :fail="isFail"
-      @update:fail="isFail = $event"
-    />
-    <nice-loading
-      v-show="isLoading"
-      :custom-style="{
-        width: cavSize.width + 'px',
-        height: cavSize.height + 'px',
-      }"
-    />
+    <countdown-tip :is-loading="isLoading" />
+    <component :is="name" :model-path="modelPath" v-bind="cavSize" :loading="isLoading"
+      @update:loading="isLoading = $event" :fail="isFail" @update:fail="isFail = $event" />
+    <nice-loading v-show="isLoading" :custom-style="{
+      width: cavSize.width + 'px',
+      height: cavSize.height + 'px',
+    }" />
     <nice-fail v-if="isFail" />
   </div>
   <slot name="default" :isLoading="isLoading"></slot>
@@ -23,6 +14,7 @@
 <script>
 import LiveDisplay from "./LiveDisplay.vue";
 import NiceLoading from "../NiceLoading.vue";
+import CountdownTip from "../CountdownTip.vue";
 import NiceFail from "../NiceFail.vue";
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import useModelStore from "../../store/model";
@@ -36,7 +28,8 @@ export default {
   components: {
     LiveDisplay,
     NiceLoading,
-    NiceFail
+    NiceFail,
+    CountdownTip
   },
   setup() {
     const getCavSize = () => ({

@@ -6,7 +6,7 @@ import ToolBar from "@components/ToolBar";
 import '@arco-design/web-vue/dist/arco.css';
 import mitt from 'mitt';
 const emitter = mitt()
-
+window.emitter = emitter
 createApp(App, {
     components: [Trigger, ToolBar, List],
     globalProperties: {
