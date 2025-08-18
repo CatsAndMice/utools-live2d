@@ -26,6 +26,11 @@ module.exports = defineConfig({
       entry: 'src/home/main.js',
       template: 'public/home.html',
       filename: 'home.html'
+    },
+    relax: {
+      entry: 'src/relax/main.js',
+      template: 'public/relax.html',
+      filename: 'relax.html'
     }
   }
 })
