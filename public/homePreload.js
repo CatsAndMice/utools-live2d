@@ -37,10 +37,10 @@ const createPushpinBrowserWindow = () => {
             preload: "./preload.js",
             nodeIntegration: true,
             contextIsolation: false,
-            openDevTools: true
+            // openDevTools: true
         }
     })
-    pushpinWindow.webContents.openDevTools()
+    // pushpinWindow.webContents.openDevTools()
     window.pushpinWindow = pushpinWindow
 }
 

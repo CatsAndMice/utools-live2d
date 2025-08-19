@@ -12,7 +12,9 @@
                 <p class="label">秒</p>
             </div>
         </div>
-        <!-- <div class="absolute ">紧急情况</div> -->
+        <div class="absolute right-3 top-3">
+            <a-button @click="onClosePage" shape="round" status="danger">紧急情况</a-button>
+        </div>
     </div>
 </template>
 <script>
@@ -21,13 +23,19 @@ import { formatTime } from "@utils/format.js"
 
 export default {
     setup() {
+        const isDev = window?.utools?.isDev || false;
         const timerService = reactive({
-            minutes: 5,
-            seconds: 0,
+            minutes: isDev ? 0 : 5,
+            seconds: isDev ? 10 : 0,
             timer: null,
             isRunning: false,
         })
 
+        const onClosePage = () => {
+            window?.utools?.sendToParent("ping", "relax-end"); // 版本：>= 6.1.0
+            window?.destroy();
+            window?.close();
+        }
 
         const toggleTimer = () => {
             if (timerService.isRunning) {
@@ -37,10 +45,9 @@ export default {
                     if (timerService.seconds === 0) {
                         if (timerService.minutes === 0) {
                             clearInterval(timerService.timer)
-                            window.utools.sendToParent("ping", "relax-end"); // 版本：>= 6.1.0
+                            onClosePage()
                             return
                         }
-
                         timerService.minutes--
                         timerService.seconds = 59
                     } else {
@@ -50,10 +57,9 @@ export default {
             }
             timerService.isRunning = true
         }
-
         onMounted(toggleTimer)
-
         return {
+            onClosePage,
             timerService,
             formatTime
         }
@@ -61,6 +67,11 @@ export default {
 }
 </script>
 <style>
+html,
+body {
+    font-size: 16px;
+}
+
 body {
     background-color: #fefefe;
     text-align: center;
@@ -99,6 +110,7 @@ body {
 
 h1 {
     font-size: 2.5rem;
+    margin: 0;
     margin-bottom: 1.5rem;
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

@@ -14,18 +14,20 @@
 import { onMounted, reactive, toRefs, watch, getCurrentInstance } from 'vue'
 import { formatTime } from "@utils/format.js";
 
-const TIP_TIME = 5
+const TIP_TIME = 5;
 export default {
     props: {
         isLoading: Boolean,
     },
     setup(props) {
+        const isDev = window?.utools?.isDev || false;
+        const TIME = isDev ? (1000 * 6) : (1000 * 60 * 6);
         const { proxy } = getCurrentInstance();
         const { $emitter: emitter } = proxy;
         const { isLoading } = toRefs(props);
         const timerService = reactive({
-            minutes: 0,
-            seconds: 10,
+            minutes: isDev ? 0 : 25,
+            seconds: isDev ? 10 : 0,
             isRunning: false,
             timer: null,
         })
@@ -45,14 +47,10 @@ export default {
 
                     if (timerService.seconds === 0) {
                         if (timerService.minutes === 0) {
-                            clearInterval(timerService.timer)
-                            // 时间到
-                            // window.emitter.emit('tip', {
-                            //     text: '休息时间到了～',
-                            //     priority: 99,
-                            //     timeout: 3000
-                            // })
-                            return
+                            clearInterval(timerService.timer);
+                            window.service.createRelaxBrowserWindow();
+                            setTimeout(resetTimer, TIME);
+                            return;
                         }
 
                         timerService.minutes--
@@ -72,9 +70,10 @@ export default {
 
         const resetTimer = () => {
             clearInterval(timerService.timer);
-            timerService.minutes = 25;
-            timerService.seconds = 0;
+            timerService.minutes = 0;
+            timerService.seconds = 10;
             timerService.isRunning = false;
+            toggleTimer();
         }
 
         watch(isLoading, (value) => {
