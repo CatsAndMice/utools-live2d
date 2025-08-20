@@ -20,8 +20,8 @@ export default {
         isLoading: Boolean,
     },
     setup(props) {
-        const isDev = window?.utools?.isDev || false;
-        const TIME = isDev ? (1000 * 6) : (1000 * 60 * 6);
+        const isDev =  false;
+        // const TIME = isDev ? (1000 * 6) : (1000 * 60 * 6);
         const { proxy } = getCurrentInstance();
         const { $emitter: emitter } = proxy;
         const { isLoading } = toRefs(props);
@@ -49,7 +49,6 @@ export default {
                         if (timerService.minutes === 0) {
                             clearInterval(timerService.timer);
                             window.service.createRelaxBrowserWindow();
-                            setTimeout(resetTimer, TIME);
                             return;
                         }
 
@@ -70,8 +69,8 @@ export default {
 
         const resetTimer = () => {
             clearInterval(timerService.timer);
-            timerService.minutes = 0;
-            timerService.seconds = 10;
+            timerService.minutes = isDev ? 0 : 25;
+            timerService.seconds = isDev ? 10 : 0;
             timerService.isRunning = false;
             toggleTimer();
         }
