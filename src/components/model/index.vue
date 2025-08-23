@@ -3,7 +3,7 @@
   <div :class="{ 'border-2 border-dashed border-black': isResizable }" @click="handleClick"
     class="h-screen w-screen overflow-hidden cursor-pointer">
     <tips-render v-bind="tips" v-model="isShopTip" />
-    <countdown-tip :is-loading="isLoading || isShopTip" />
+    <countdown-tip :is-loading="isLoading || isShopTip || isFail" />
     <div class="mt-5">
       <component :is="name" :model-path="modelPath" v-bind="cavSize" :loading="isLoading"
         @update:loading="isLoading = $event" :fail="isFail" @update:fail="isFail = $event" />

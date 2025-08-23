@@ -1,30 +1,31 @@
 <template>
     <div v-show="!isLoading" id="setTimeModal" style="display: flex; align-items: center;" class="py-1 px-2 rounded-md">
-
         <input id="minute" type="text" class="text-center pointer-events-none"
             :value="formatTime(timerService.minutes)" />
         <span style="padding: 0 5px">:</span>
         <input id="second" type="text" class="text-center pointer-events-none"
             :value="formatTime(timerService.seconds)" />
-
-
     </div>
 </template>
 <script>
-import { onMounted, reactive, toRefs, watch, getCurrentInstance } from 'vue'
+import { onMounted, reactive, toRefs, watch,unref, getCurrentInstance } from 'vue'
 import { formatTime } from "@utils/format.js";
 
 const TIP_TIME = 5;
 export default {
     props: {
         isLoading: Boolean,
+        isRun: {
+            type: Boolean,
+            default: true,
+        },
     },
     setup(props) {
-        const isDev =  false;
+        const isDev = false;
         // const TIME = isDev ? (1000 * 6) : (1000 * 60 * 6);
         const { proxy } = getCurrentInstance();
         const { $emitter: emitter } = proxy;
-        const { isLoading } = toRefs(props);
+        const { isLoading, isRun } = toRefs(props);
         const timerService = reactive({
             minutes: isDev ? 0 : 25,
             seconds: isDev ? 10 : 0,
@@ -75,23 +76,29 @@ export default {
             toggleTimer();
         }
 
-        watch(isLoading, (value) => {
-            if (timerService.seconds === 0 && timerService.minutes === 0) {
-                return;
-            }
-            if (value) {
-                stopTimer();
-                return;
-            }
-            toggleTimer();
-        }, { immediate: true })
 
-        onMounted(() => {
-            emitter.off('reset-timer');
-            emitter.on('reset-timer', resetTimer);
-        })
+        if (unref(isRun)) {
+            watch(isLoading, (value) => {
+                if (timerService.seconds === 0 && timerService.minutes === 0) {
+                    return;
+                }
+                if (value) {
+                    stopTimer();
+                    return;
+                }
+                toggleTimer();
+            }, { immediate: true })
+
+
+            onMounted(() => {
+                emitter.off('reset-timer');
+                emitter.on('reset-timer', resetTimer);
+            })
+        }
+
 
         return {
+
             timerService,
             formatTime
         }
