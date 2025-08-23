@@ -1,4 +1,8 @@
 const { ipcRenderer } = require("electron");
+
+
+
+
 ipcRenderer.on("ping", (event, data) => {
     if (data == 'close') {
         if (window.pushpinWindow) {
@@ -43,6 +47,17 @@ const createPushpinBrowserWindow = () => {
     // pushpinWindow.webContents.openDevTools()
     window.pushpinWindow = pushpinWindow
 }
+
+
+// 增加一个直接打开挂件的命令
+window.utools.onPluginEnter(({ code }) => {
+    if (code === "live2d-pendants") {
+        setTimeout(() => {
+            window.utools.hideMainWindow();
+            createPushpinBrowserWindow();
+        }, 200);
+    }
+});
 
 
 window.service = {
