@@ -17,20 +17,23 @@ module.exports = defineConfig({
     }
   },
   pages: {
-    index: {
+    pendant: {
       entry: 'src/page/pendant/main.js',
       template: 'public/page/pendant/pendant.html',
-      filename: 'pendant.html'
+      filename: 'page/pendant/pendant.html',
+      publicPath: '../../',
     },
     home: {
       entry: 'src/page/home/main.js',
       template: 'public/page/home/home.html',
-      filename: 'index.html'
+      filename: 'page/home/home.html',
+      publicPath: '../../',
     },
     relax: {
       entry: 'src/page/relax/main.js',
       template: 'public/page/relax/relax.html',
-      filename: 'relax.html'
+      filename: 'page/relax/relax.html',
+      publicPath: '../../',
     }
   }
 })

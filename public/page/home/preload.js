@@ -40,7 +40,7 @@ const createPushpinBrowserWindow = () => {
         }
         return;
     }
-    const pushpinWindow = window.utools.createBrowserWindow('./pendant.html', {
+    const pushpinWindow = window.utools.createBrowserWindow('./page/pendant/pendant.html', {
         height: 350,
         width: 350,
         alwaysOnTop: true,

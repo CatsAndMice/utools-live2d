@@ -72,7 +72,7 @@ export default {
         IconInfoCircle,
     },
     setup(props) {
-        const isDev = false;
+        const isDev = window.utools ? window.utools.isDev() : true;
         // const TIME = isDev ? (1000 * 6) : (1000 * 60 * 6);
         const { proxy } = getCurrentInstance();
         const { $emitter: emitter } = proxy;

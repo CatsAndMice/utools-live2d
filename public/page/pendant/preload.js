@@ -24,12 +24,12 @@ const createRelaxBrowserWindow = () => {
         }
     }
 
-    const relaxWindow = window.utools.createBrowserWindow('./relax.html', {
+    const relaxWindow = window.utools.createBrowserWindow('./page/relax/relax.html', {
         fullscreen: true,
         alwaysOnTop: true,
         frame: false,
         resizable: false,
-        movable: true,
+        movable: false,
         hasShadow: false,
         webPreferences: {
             nodeIntegration: true,
