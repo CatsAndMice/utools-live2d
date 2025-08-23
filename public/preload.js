@@ -41,9 +41,11 @@ const createRelaxBrowserWindow = () => {
     window.relaxWindow = relaxWindow
 }
 
-
 window.service = {
     createRelaxBrowserWindow,
+    onResizable() {
+        utools.sendToParent("ping", "resizable"); // 版本：>= 6.1.0
+    },
     onClose() {
         utools.sendToParent("ping", "close"); // 版本：>= 6.1.0
     }

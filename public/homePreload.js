@@ -13,7 +13,20 @@ ipcRenderer.on("ping", (event, data) => {
             }
             window.pushpinWindow = null;
         }
+        return
+    }
 
+
+    // 窗口可拖动
+    if (data == 'resizable') {
+        if (window.pushpinWindow) {
+            try {
+                window.pushpinWindow.setResizable(!window.pushpinWindow.isResizable());
+            } catch (err) {
+                console.warn('设置窗口拖动失败', err);
+            }
+        }
+        return
     }
 });
 
@@ -33,7 +46,7 @@ const createPushpinBrowserWindow = () => {
         alwaysOnTop: true,
         transparent: true,
         frame: false,
-        resizable: true,
+        resizable: false,
         backgroundColor: "#00000000",
         movable: true,
         hasShadow: false,
@@ -41,10 +54,11 @@ const createPushpinBrowserWindow = () => {
             preload: "./preload.js",
             nodeIntegration: true,
             contextIsolation: false,
-            // openDevTools: true
+            ...(window.utools.isDev() && { openDevTools: true })
         }
     })
-    // pushpinWindow.webContents.openDevTools()
+    window.utools.isDev() && pushpinWindow.webContents.openDevTools()
+
     window.pushpinWindow = pushpinWindow
 }
 
