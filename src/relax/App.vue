@@ -113,7 +113,9 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #4568dc, #b06ab3);
+    background-image: url('~../assets/bg.png');
+    background-size: cover;
+    background-position: center center;
     font-family: '微软雅黑', Arial, sans-serif;
     color: white;
 }
