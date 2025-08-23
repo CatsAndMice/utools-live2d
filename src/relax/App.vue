@@ -50,7 +50,7 @@ export default {
             window?.destroy();
             window?.close();
         }
-        
+
         // 在toggleTimer函数中移除对animateTime的调用
         timerService.timer = setInterval(() => {
             if (timerService.seconds === 0) {
@@ -137,7 +137,7 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
     z-index: -1;
 }
 
@@ -146,7 +146,7 @@ body {
     z-index: 1;
 }
 
-h1 {
+.container h1 {
     font-size: 2.8rem;
     margin: 0;
     margin-bottom: 1.5rem;
@@ -177,7 +177,8 @@ h1 {
     padding: 1.5rem 2rem;
     border-radius: 16px;
     /* min-width: 120px; */
-    width: 130px; /* 固定宽度 */
+    width: 130px;
+    /* 固定宽度 */
     text-align: center;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -189,8 +190,10 @@ h1 {
     color: white;
     margin: 0;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    font-family: 'Courier New', monospace; /* 使用等宽字体 */
-    width: 100%; /* 确保宽度填满父容器 */
+    font-family: 'Courier New', monospace;
+    /* 使用等宽字体 */
+    width: 100%;
+    /* 确保宽度填满父容器 */
 }
 
 .time-box:hover {
@@ -242,7 +245,7 @@ h1 {
     background: linear-gradient(90deg, #8e44ad, #9b59b6);
     color: white;
     border: none;
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 30px;
     font-weight: 600;
     font-size: 1rem;
