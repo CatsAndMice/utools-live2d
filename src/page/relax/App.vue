@@ -113,7 +113,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('~../assets/bg.png');
+    background-image: url('~@assets/bg.png');
     background-size: cover;
     background-position: center center;
     font-family: '微软雅黑', Arial, sans-serif;

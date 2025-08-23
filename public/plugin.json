@@ -1,7 +1,7 @@
 {
   "logo": "logo.png",
-  "main": "home.html",
-  "preload": "homePreload.js",
+  "main": "page/home/home.html",
+  "preload": "page/home/preload.js",
   "features": [
     {
       "code": "live2d",
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "code": "live2d-pendants",
+      "code": "live2d-pendant",
       "explain": "👻在你的桌面放一个桌宠挂件",
       "cmds": [
         "桌宠挂件"

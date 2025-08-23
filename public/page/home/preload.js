@@ -40,7 +40,7 @@ const createPushpinBrowserWindow = () => {
         }
         return;
     }
-    const pushpinWindow = window.utools.createBrowserWindow('./index.html', {
+    const pushpinWindow = window.utools.createBrowserWindow('./pendant.html', {
         height: 350,
         width: 350,
         alwaysOnTop: true,
@@ -51,7 +51,7 @@ const createPushpinBrowserWindow = () => {
         movable: true,
         hasShadow: false,
         webPreferences: {
-            preload: "./preload.js",
+            preload: "./page/pendant/preload.js",
             nodeIntegration: true,
             contextIsolation: false,
             ...(window.utools.isDev() && { openDevTools: true })

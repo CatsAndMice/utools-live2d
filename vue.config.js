@@ -18,18 +18,18 @@ module.exports = defineConfig({
   },
   pages: {
     index: {
-      entry: 'src/main.js',
-      template: 'public/index.html',
-      filename: 'index.html'
+      entry: 'src/page/pendant/main.js',
+      template: 'public/page/pendant/pendant.html',
+      filename: 'pendant.html'
     },
     home: {
-      entry: 'src/home/main.js',
-      template: 'public/home.html',
-      filename: 'home.html'
+      entry: 'src/page/home/main.js',
+      template: 'public/page/home/home.html',
+      filename: 'index.html'
     },
     relax: {
-      entry: 'src/relax/main.js',
-      template: 'public/relax.html',
+      entry: 'src/page/relax/main.js',
+      template: 'public/page/relax/relax.html',
       filename: 'relax.html'
     }
   }
