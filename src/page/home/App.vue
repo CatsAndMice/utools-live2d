@@ -3,17 +3,10 @@
     <simple-model-render>
       <template #default="{ isLoading }">
         <!-- 右上角固定图标 -->
-        <div
-          v-show="!isLoading"
-          class="absolute top-4 right-4 flex bg-white px-3 py-1 rounded-full"
-        >
+        <div v-show="!isLoading" class="absolute top-4 right-4 flex bg-white px-3 py-1 rounded-full">
           <a-space>
             <a-tooltip content="常驻桌面">
-              <a-button
-                shape="circle"
-                style="--color-secondary: #fff"
-                @click="onCreatePushpinBrowserWindow"
-              >
+              <a-button shape="circle" style="--color-secondary: #fff" @click="onCreatePushpinBrowserWindow">
                 <icon-pushpin class="!w-5 !h-5" />
               </a-button>
             </a-tooltip>
@@ -30,19 +23,32 @@ import SelectModel from "@components/select-model";
 import { IconPushpin } from "@arco-design/web-vue/es/icon";
 import { setStorageItem } from "@utils/dbStorage";
 import useModelStore from "@store/model";
-import { unref } from "vue";
+import { onBeforeMount, unref, getCurrentInstance } from "vue";
+import { Message } from '@arco-design/web-vue';
 export default {
   components: {
     SelectModel,
     IconPushpin,
   },
   setup() {
+    const { proxy } = getCurrentInstance()
+    const emitter = proxy.$emitter
     const { modelPath } = useModelStore();
     const onCreatePushpinBrowserWindow = () => {
-      window.utools.hideMainWindow();
-      setStorageItem("modelPath", unref(modelPath));
-      window.service.createPushpinBrowserWindow();
+      if (window.utools && window.utools.sendToParent) {
+        window.utools.hideMainWindow();
+        setStorageItem("modelPath", unref(modelPath));
+        window.service.createPushpinBrowserWindow();
+        return
+      }
+
+      Message.error('请确保 uTools 版本为 6.1.0 或以上')
     };
+
+    onBeforeMount(() => {
+      emitter.off('create-pushpin')
+      emitter.on('create-pushpin', onCreatePushpinBrowserWindow)
+    })
 
     return {
       onCreatePushpinBrowserWindow,

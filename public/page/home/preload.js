@@ -67,8 +67,7 @@ const createPushpinBrowserWindow = () => {
 window.utools.onPluginEnter(({ code }) => {
     if (code === "live2d-pendants") {
         setTimeout(() => {
-            window.utools.hideMainWindow();
-            createPushpinBrowserWindow();
+            window.emitter.emit('create-pushpin')
         }, 200);
     }
 });
