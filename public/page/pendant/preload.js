@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+const Say = require("say");
 ipcRenderer.on("ping", (event, data) => {
     if (data === 'reload') {
         window.location.reload();
@@ -10,7 +11,6 @@ ipcRenderer.on("ping", (event, data) => {
         window.emitter.emit('reset-timer')
         window.relaxWindow && window.relaxWindow.destroy();
         return
-
     }
 });
 
@@ -41,6 +41,7 @@ const createRelaxBrowserWindow = () => {
     window.relaxWindow = relaxWindow
 }
 
+
 window.service = {
     createRelaxBrowserWindow,
     onResizable() {
@@ -48,5 +49,8 @@ window.service = {
     },
     onClose() {
         utools.sendToParent("ping", "close"); // 版本：>= 6.1.0
+    },
+    say(text) {
+        Say.speak(text)
     }
 }

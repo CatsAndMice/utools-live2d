@@ -103,7 +103,9 @@ export default {
         timerService.timer = setInterval(() => {
           if (timerService.seconds === TIP_TIME && timerService.minutes === 0) {
             const message = TIP_TIME + "秒后开始休息～";
+
             window.utools.showNotification(message, 'live2d');
+            // window.service.say(message)
             window.emitter.emit("tip", {
               text: message,
               priority: 99,
