@@ -11,6 +11,7 @@
               </a-button>
             </a-tooltip>
             <select-model />
+            <time-setting />
           </a-space>
         </div>
       </template>
@@ -25,6 +26,7 @@ import { setStorageItem } from "@utils/dbStorage";
 import useModelStore from "@store/model";
 import { onBeforeMount, unref, getCurrentInstance } from "vue";
 import { Message } from '@arco-design/web-vue';
+
 export default {
   components: {
     SelectModel,
