@@ -30,13 +30,15 @@
 <script>
 import { reactive, onMounted, computed } from "vue";
 import { formatTime } from "@utils/format.js";
+import { getStorageItem } from "@utils/dbStorage.js";
 export default {
   setup() {
-    const isDev = window.utools ? window.utools.isDev() : true;
-    const totalSeconds = isDev ? 10 : 300; // 5分钟 = 300秒
+    const settings = getStorageItem('settings')
+    const minutes = settings?.breakTime || 5;
+    const totalSeconds = minutes * 60; // 5分钟 = 300秒
     const timerService = reactive({
-      minutes: isDev ? 0 : 5,
-      seconds: isDev ? 10 : 0,
+      minutes: minutes,
+      seconds: 0,
       timer: null,
       isRunning: false,
       startTime: 0,
@@ -140,11 +142,9 @@ body {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0) 70%);
   z-index: -1;
 }
 

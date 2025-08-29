@@ -11,5 +11,5 @@ export const getStorageItem = (key) => {
         return window.utools.dbStorage.getItem(key);
     }
     const value = localStorage.getItem(key)
-    return value || JSON.parse(value);
+    return value && JSON.parse(value);
 } 
