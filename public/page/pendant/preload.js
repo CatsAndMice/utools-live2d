@@ -1,12 +1,13 @@
 const { ipcRenderer } = require("electron");
 const Say = require("say");
+
 ipcRenderer.on("ping", (event, data) => {
     if (data === 'reload') {
         window.location.reload();
         return
     }
 
-    // 休息结束
+    // 休息结束 || 重置休息时间
     if (data === 'relax-end') {
         window.emitter.emit('reset-timer')
         window.relaxWindow && window.relaxWindow.destroy();

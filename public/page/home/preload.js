@@ -70,9 +70,20 @@ window.utools.onPluginEnter(({ code }) => {
             window.emitter.emit('create-pushpin')
         }, 200);
     }
+
+    if (code === "live2d-confirm") {
+        setTimeout(() => {
+            window.emitter.emit('open-confirm')
+        }, 200);
+    }
 });
 
 
 window.service = {
-    createPushpinBrowserWindow
+    createPushpinBrowserWindow,
+    onResetBeakTime() {
+        if (window.pushpinWindow) {
+            window.pushpinWindow.webContents.send("ping", "relax-end");
+        }
+    }
 }

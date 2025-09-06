@@ -16,6 +16,11 @@ module.exports = defineConfig({
       }
     }
   },
+  devServer: {
+    client: {
+      overlay: false, // ✅ 关闭错误遮罩
+    },
+  },
   pages: {
     pendant: {
       entry: 'src/page/pendant/main.js',

@@ -9,11 +9,14 @@ import Tooltip from "@arco-design/web-vue/es/tooltip";
 import Dropdown from "@arco-design/web-vue/es/dropdown";
 import Modal from "@arco-design/web-vue/es/modal";
 import Slider from "@arco-design/web-vue/es/slider";
+import Popconfirm from "@arco-design/web-vue/es/popconfirm";
 import '@arco-design/web-vue/dist/arco.css';
 
 import mitt from 'mitt';
 const emitter = mitt();
 window.emitter = emitter;
+
+
 createApp(App, {
     components: [
         SimpleModelRender,
@@ -24,7 +27,8 @@ createApp(App, {
         Dropdown,
         Drawer,
         Modal,
-        Slider
+        Slider,
+        Popconfirm
     ],
     globalProperties: {
         '$emitter': emitter
